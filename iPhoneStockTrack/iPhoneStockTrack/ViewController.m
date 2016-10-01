@@ -67,7 +67,9 @@
     
     NSDictionary *iPhoneDic = @{
                                 @"iPhone 7p JB 128G":@"MN4V2VC%2FA",
-                                @"iPhone 7p JB 256G":@"MN512VC%2FA"};
+                                @"iPhone 7p JB 256G":@"MN512VC%2FA",
+                                @"iPhone 7p MB 128G":@"MN4M2VC%2FA",
+                                @"iPhone 7p MB 256G":@"MN4W2VC%2FA"};
     
     for(NSString *descriptor in iPhoneDic) {
         NSString *stockDisplay = [self getiPhoneStock:iPhoneDic[descriptor]];
