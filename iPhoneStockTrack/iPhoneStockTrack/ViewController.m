@@ -11,11 +11,9 @@
 
 @implementation ViewController
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    // Do any additional setup after loading the view.
     [self fillBigLabel];
     [NSTimer scheduledTimerWithTimeInterval:60.0
                                      target:self
@@ -71,12 +69,11 @@
                                 @"iPhone 7p MB 128G":@"MN4M2VC%2FA",
                                 @"iPhone 7p MB 256G":@"MN4W2VC%2FA"};
     
-    for(NSString *descriptor in iPhoneDic) {
+    for (NSString *descriptor in iPhoneDic) {
         NSString *stockDisplay = [self getiPhoneStock:iPhoneDic[descriptor]];
         if (![stockDisplay isEqualToString:@""]&&![stockDisplay isEqual:@"unavailable"]&&![stockDisplay isEqual:@"ineligible"]) {
             
             // Instock
-            
             NSUserNotification *notification = [[NSUserNotification alloc] init];
             notification.title = descriptor;
             notification.informativeText = [NSString stringWithFormat:@"In Stock!"];
@@ -89,8 +86,7 @@
             
             self.mainlabel.textColor = [NSColor colorWithRed:0 green:204/255.f blue:0 alpha:1];
             
-        }
-        else {
+        } else {
             [self.mainlabel setStringValue:[NSString stringWithFormat:@"%@%@: NOOO/inEligible\n", self.mainlabel.stringValue, descriptor]];
         }
     }
@@ -106,20 +102,13 @@
     
     NSDictionary *requestReply = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
     
-    if ([requestReply objectForKey:@"head"]) {
-        if ([[[requestReply objectForKey:@"head"]objectForKey:@"status"]isEqualToString:@"200"]) {
-            return [[[[[[requestReply objectForKey:@"body"]objectForKey:@"stores"]objectAtIndex:0] objectForKey:@"partsAvailability"]objectForKey:[part stringByReplacingOccurrencesOfString:@"%2F" withString:@"/"]]objectForKey:@"pickupDisplay"];
-        }
+    if ([requestReply objectForKey:@"head"]
+        && [[[requestReply objectForKey:@"head"]objectForKey:@"status"]isEqualToString:@"200"]) {
+        return [[[[[[requestReply objectForKey:@"body"]objectForKey:@"stores"]objectAtIndex:0] objectForKey:@"partsAvailability"]objectForKey:[part stringByReplacingOccurrencesOfString:@"%2F" withString:@"/"]]objectForKey:@"pickupDisplay"];
     }
     
     return @"";
     
-}
-
-- (void)setRepresentedObject:(id)representedObject {
-    [super setRepresentedObject:representedObject];
-
-    // Update the view, if already loaded.
 }
 
 @end
